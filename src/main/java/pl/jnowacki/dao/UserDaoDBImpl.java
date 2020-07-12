@@ -48,4 +48,21 @@ public class UserDaoDBImpl implements UserDao {
 
         return null;
     }
+
+    @Override
+    public void createUser(String login, String hashedPassword) {
+        String selectSQL = "INSERT INTO users (login, password) VALUE (?, ?)";
+
+        try (Connection dbConnection = DbConnection.getDBConnection();
+             PreparedStatement preparedStatement = dbConnection.prepareStatement(selectSQL)) {
+
+            preparedStatement.setString(1, login);
+            preparedStatement.setString(2, hashedPassword);
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

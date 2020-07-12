@@ -29,4 +29,9 @@ public class UserServiceImpl implements UserService {
 
         return user != null && user.getLogin().equals(login) && PasswordUtil.checkPassword(password, user.getPassword());
     }
+
+    @Override
+    public void createUser(String login, String password) {
+        userDao.createUser(login, PasswordUtil.hashPassword(password));
+    }
 }

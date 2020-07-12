@@ -33,11 +33,13 @@ public class LoginController extends HttpServlet {
         }
     }
 
-    private void registerUser(HttpServletRequest req, HttpServletResponse resp) {
+    private void registerUser(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
         userService.createUser(username, password);
+
+        resp.sendRedirect(req.getContextPath() + "/");
     }
 
     private void logoutUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{

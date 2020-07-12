@@ -33,26 +33,52 @@
 <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
 
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            Menu
-            <i class="fas fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/blog.jsp">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/about.jsp">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="post.html">Sample Post</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contact.html">Contact</a>
-                </li>
-            </ul>
-        </div>
+        <c:choose>
+            <c:when test="${sessionScope.username == null}">
+                <form class="form-inline" method="post" action="${pageContext.request.contextPath}/login">
+                    <div class="form-group mx-sm-3 mb-2">
+                        <label for="username" class="sr-only">Email</label>
+                        <input type="text" class="form-control" id="username" placeholder="Login" name="username">
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        <label for="password" class="sr-only">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                    </div>
+
+                    <input type="hidden" name="action" value="login">
+                    <button type="submit" class="btn btn-primary mb-2">Log in</button>
+                </form>
+            </c:when>
+            <c:otherwise>
+                Hello ${sessionScope.username}
+                <form method="post" action="${pageContext.request.contextPath}/login">
+                    <input type="hidden" name="action" value="logout">
+                    <input type="submit" value="Log out">
+                </form>
+
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/blog.jsp">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/about.jsp">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="post.html">Sample Post</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.html">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </c:otherwise>
+        </c:choose>
+
     </div>
 </nav>
 

@@ -1,5 +1,6 @@
 package pl.jnowacki.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import pl.jnowacki.service.UserService;
 import pl.jnowacki.service.UserServiceImpl;
 
@@ -14,6 +15,23 @@ import java.io.IOException;
 public class LoginController extends HttpServlet {
 
     private UserService userService = UserServiceImpl.getInstance();
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String token = req.getParameter("token");
+
+        boolean isActivated = false;
+
+        if(StringUtils.isNotEmpty(token)) {
+            isActivated = userService.activateUser(token);
+        }
+
+        if(isActivated) {
+            resp.getWriter().println("Aktywowano twojego uzytkownika!");
+        } else {
+            resp.getWriter().println("Cos poszlo nie tak :(");
+        }
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -37,7 +55,7 @@ public class LoginController extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
-        userService.createUser(username, password);
+        userService.createUser(username, password, req.getContextPath());
 
         resp.sendRedirect(req.getContextPath() + "/");
     }

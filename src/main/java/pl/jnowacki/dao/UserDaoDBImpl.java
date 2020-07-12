@@ -38,8 +38,10 @@ public class UserDaoDBImpl implements UserDao {
                 Long id = rs.getLong("id");
                 String login = rs.getString("login");
                 String pwd = rs.getString("password");
+                boolean active = rs.getBoolean("active");
+                String token = rs.getString("token");
 
-                return new User(id, login, pwd);
+                return new User(id, login, pwd, active, token);
             }
 
         } catch (SQLException e) {
@@ -50,19 +52,40 @@ public class UserDaoDBImpl implements UserDao {
     }
 
     @Override
-    public void createUser(String login, String hashedPassword) {
-        String selectSQL = "INSERT INTO users (login, password) VALUE (?, ?)";
+    public boolean createUser(String login, String hashedPassword, String token) {
+        String selectSQL = "INSERT INTO users (login, password, token) VALUE (?, ?, ?)";
 
         try (Connection dbConnection = DbConnection.getDBConnection();
              PreparedStatement preparedStatement = dbConnection.prepareStatement(selectSQL)) {
 
             preparedStatement.setString(1, login);
             preparedStatement.setString(2, hashedPassword);
+            preparedStatement.setString(3, token);
 
-            preparedStatement.executeUpdate();
+            return preparedStatement.executeUpdate() == 1;
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return false;
+    }
+
+    @Override
+    public boolean activateUser(String token) {
+
+        String selectSQL = "UPDATE users SET active = true WHERE token = ? AND active = false";
+
+        try (Connection dbConnection = DbConnection.getDBConnection();
+             PreparedStatement preparedStatement = dbConnection.prepareStatement(selectSQL)) {
+
+            preparedStatement.setString(1, token);
+
+            return preparedStatement.executeUpdate() == 1;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return false;
     }
 }

@@ -7,14 +7,18 @@ public class User implements Serializable {
     private Long id;
     private String login;
     private String password;
+    private Boolean active;
+    private String token;
 
     public User() {
     }
 
-    public User(Long id, String login, String password) {
+    public User(Long id, String login, String password, Boolean active, String token) {
         this.id = id;
         this.login = login;
         this.password = password;
+        this.active = active;
+        this.token = token;
     }
 
     public Long getId() {
@@ -39,5 +43,21 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

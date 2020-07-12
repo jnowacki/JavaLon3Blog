@@ -4,5 +4,6 @@ import pl.jnowacki.model.User;
 
 public interface UserDao {
     User getUser(String login);
-    void createUser(String login, String hashedPassword);
+    boolean createUser(String login, String hashedPassword, String token);
+    boolean activateUser(String token);
 }

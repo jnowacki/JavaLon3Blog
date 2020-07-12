@@ -46,14 +46,14 @@
                     </div>
 
                     <input type="hidden" name="action" value="login">
-                    <button type="submit" class="btn btn-primary mb-2">Log in</button>
+                    <button type="submit" class="btn btn-primary btn-sm">Log in</button>
                 </form>
             </c:when>
             <c:otherwise>
-                Hello ${sessionScope.username}
+                <span class="text-white hello-text">Hello ${sessionScope.username}</span>
                 <form method="post" action="${pageContext.request.contextPath}/login">
                     <input type="hidden" name="action" value="logout">
-                    <input type="submit" value="Log out">
+                    <button type="submit" class="btn btn-secondary btn-sm">Log out</button>
                 </form>
 
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">

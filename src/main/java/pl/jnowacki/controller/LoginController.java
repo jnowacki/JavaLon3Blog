@@ -25,9 +25,19 @@ public class LoginController extends HttpServlet {
                 loginUser(req, resp);
                 break;
             case "logout":
-            default:
                 logoutUser(req, resp);
+                break;
+            case "register":
+                registerUser(req, resp);
+                break;
         }
+    }
+
+    private void registerUser(HttpServletRequest req, HttpServletResponse resp) {
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
+
+        userService.createUser(username, password);
     }
 
     private void logoutUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{

@@ -49,8 +49,8 @@
                                name="password">
                     </div>
 
-                    <input type="hidden" name="action" value="login">
-                    <button type="submit" class="btn btn-primary btn-sm">Log in</button>
+                    <button type="submit" class="btn btn-primary btn-sm button-with-margin" name="action" value="login">Log in</button>
+                    <button type="submit" class="btn btn-primary btn-sm" name="action" value="register">Register</button>
                 </form>
             </c:when>
             <c:otherwise>
